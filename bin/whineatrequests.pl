@@ -23,16 +23,20 @@
 
 use strict;
 
+BEGIN {
+    use lib qw(lib .);
+    use Bugzilla;
+    Bugzilla->extensions;
+}
+
 use lib qw(. lib);
 
 use Bugzilla;
 use Bugzilla::User;
 use Bugzilla::Mailer;
+use Bugzilla::Extension::RequestWhiner::Constants;
 
 my $dbh = Bugzilla->dbh;
-
-# XXX
-my $whine_after_days = 7;
 
 my $sth_get_requests =
     $dbh->prepare("SELECT profiles.login_name,
@@ -54,7 +58,7 @@ my $sth_get_requests =
                               " - " .
                               $dbh->sql_to_days('flags.modification_date') . 
                               " > " .
-                              $whine_after_days . "
+                              WHINE_AFTER_DAYS . "
                  ORDER BY flags.modification_date");
 
 $sth_get_requests->execute();
@@ -95,7 +99,7 @@ foreach my $recipient (keys %$requests) {
         recipient => $user,
         subject   => "Outstanding Requests",
         requests  => $requests->{$recipient},
-        threshold => Bugzilla->params->{'request_whine_days'}
+        threshold => WHINE_AFTER_DAYS
     });
 }
 

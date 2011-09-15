@@ -19,12 +19,13 @@
 # Contributor(s):
 #   Gervase Markham <written.to.the.glory.of.god@gerv.net>
 
-package Bugzilla::Extension::RequestWhiner;
+package Bugzilla::Extension::RequestWhiner::Constants;
 use strict;
-use base qw(Bugzilla::Extension);
+use base qw(Exporter);
+our @EXPORT = qw(
+    WHINE_AFTER_DAYS
+);
 
-our $VERSION = '0.01';
+use constant WHINE_AFTER_DAYS => 7;
 
-# All the code is in the script in bin/.
-
-__PACKAGE__->NAME;
+1;

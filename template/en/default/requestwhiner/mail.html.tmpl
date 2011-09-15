@@ -29,24 +29,24 @@
   </head>
   <body bgcolor="#FFFFFF">
 
-<p>Here are your outstanding requests older than [% threshold %] days:</p>
+<p>Here are your outstanding requests older than [% threshold FILTER html%] 
+days:</p>
 
 [% FOREACH request = requests.keys %]
-<h3>[%+ request +%]</h3>
+<h3>[% request FILTER html %]</h3>
 
 <ul>
-  [% bugs = requests.$request %]
-  [% FOREACH bug = bugs %]
+  [% FOREACH bug = requests.$request %]
   <li>
-    <a href="[%+ urlbase %]show_bug.cgi?id=[% bug.id +%]">[%+ terms.Bug +%]
-    [%+ bug.id %]: [% bug.summary FILTER html %]</a> ([% bug.age %] days old)
+    <a href="[% urlbase FILTER none %]show_bug.cgi?id=[% bug.id FILTER none %]">[% terms.Bug %]
+    [%+ bug.id FILTER none %]: [% bug.summary FILTER html %]</a> ([% bug.age FILTER none %] days old)
   </li>
   [% END %]
 </ul>
 
 [% END %]
 
-<p><a href="[%+ urlbase %]request.cgi?action=queue&requestee=[% recipient.email FILTER url %]&group=type">See all your outstanding requests</a>.</p>
+<p><a href="[% urlbase FILTER none %]request.cgi?action=queue&requestee=[% recipient.email FILTER url_quote %]&group=type">See all your outstanding requests</a>.</p>
 
   </body>
 </html>

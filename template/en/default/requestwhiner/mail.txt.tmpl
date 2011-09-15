@@ -26,11 +26,10 @@ Here are your outstanding requests older than [% threshold %] days:
 [%+ request +%]
 [%+ "-" FILTER repeat(request.length) +%]
 
-  [% bugs = requests.$request %]
-  [% FOREACH bug = bugs %]
+  [% FOREACH bug = requests.$request %]
   [%+ terms.Bug +%] [%+ bug.id %]: [% bug.summary +%] ([% bug.age %] days old)
     [%+ urlbase %]show_bug.cgi?id=[% bug.id +%]
   [%+ END +%]
 [% END %]
 To see all your outstanding requests, visit:
-[%+ urlbase %]request.cgi?action=queue&requestee=[% recipient.email FILTER url %]&group=type
+[%+ urlbase %]request.cgi?action=queue&requestee=[% recipient.email FILTER url_quote %]&group=type
