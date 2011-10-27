@@ -22,13 +22,16 @@
 
 Here are your outstanding requests older than [% threshold %] days:
 
-[% FOREACH request = requests.keys %]
-[%+ request +%]
-[%+ "-" FILTER repeat(request.length) +%]
+[% FOREACH request_type = requests.keys %]
+[%+ request_type +%]
+[%+ "-" FILTER repeat(request_type.length) +%]
 
-  [% FOREACH bug = requests.$request %]
-  [%+ terms.Bug +%] [%+ bug.id %]: [% bug.summary +%] ([% bug.age %] days old)
-    [%+ urlbase %]show_bug.cgi?id=[% bug.id +%]
+  [% FOREACH request = requests.$request_type %]
+  [%+ terms.Bug +%] [%+ request.bug_id %]: [% request.summary +%] ([% request.age %] days old)
+    [%+ urlbase %]show_bug.cgi?id=[% request.bug_id +%]
+    [% IF request.attach_id %]
+    [%+ urlbase %]attachment.cgi?id=[% request.attach_id %]&action=edit
+    [% END %]
   [%+ END +%]
 [% END %]
 To see all your outstanding requests, visit:
