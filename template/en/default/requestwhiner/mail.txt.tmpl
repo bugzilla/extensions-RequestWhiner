@@ -20,7 +20,10 @@
 [% PROCESS global/variables.none.tmpl %]
 [% PROCESS 'global/field-descs.none.tmpl' %]
 
-Here are your outstanding requests older than [% threshold %] days:
+The following is a list of requests people have made of you, which have been
+outstanding more than [% threshold %] days. To avoid disappointing others, please deal with
+them as quickly as possible. Here is some guidance on handling requests:
+  https://wiki.mozilla.org/BMO/Handling_Requests
 
 [% FOREACH request_type = requests.keys %]
 [%+ request_type +%]
@@ -36,6 +39,3 @@ Here are your outstanding requests older than [% threshold %] days:
 [% END %]
 To see all your outstanding requests, visit:
 [%+ urlbase %]request.cgi?action=queue&requestee=[% recipient.email FILTER url_quote %]&group=type
-
-For guidance on handling requests, see:
-https://wiki.mozilla.org/BMO/Handling_Requests
